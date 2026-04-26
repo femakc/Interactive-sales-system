@@ -1,20 +1,19 @@
 package org.example.services.parsers;
 
 import org.example.data.ClientOrder;
+import org.example.exceptions.ParseException;
 
 import java.time.LocalDateTime;
 
-import static org.example.services.utilites.DelimiterUtils.getDelimiter;
-
-public class ClientParser implements ILineParser<ClientOrder> {
+public class ClientParser implements LineParser<ClientOrder> {
 
     @Override
-    public ClientOrder parse(String line) {
+    public ClientOrder parse(String line, String delimiter) {
         try {
-            String[] parts = line.split(getDelimiter(line));
+            String[] parts = line.split(delimiter);
 
             if (parts.length < 3) {
-                throw new RuntimeException("Invalid line: " + line);
+                throw new ParseException("Invalid line: " + line);
             }
 
             LocalDateTime orderDate = LocalDateTime.parse(parts[0]);
@@ -24,8 +23,7 @@ public class ClientParser implements ILineParser<ClientOrder> {
             return new ClientOrder(orderDate, companyName, ordersWeight);
 
         } catch (Exception e) {
-            throw new RuntimeException("Ошибка в строке: " + line, e);
+            throw new ParseException("Ошибка в строке: " + line, e);
         }
     }
-
 }
