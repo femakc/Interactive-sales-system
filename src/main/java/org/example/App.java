@@ -15,7 +15,6 @@ public class App
         int discountStep = AppConfig.getInteger("discount.step");
         FileOrderService fileOrderService = new FileOrderService();
         OrderDiscountService orderDiscountService = new OrderDiscountService();
-//        ClientOrder clientOrder = new ClientOrder();
 
         OrderManager orderManager = new OrderManager(
                 paths,
@@ -24,7 +23,6 @@ public class App
                 discountStep,
                 fileOrderService,
                 orderDiscountService
-//                clientOrder
         );
         orderManager.process();
     }
