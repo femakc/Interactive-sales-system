@@ -1,6 +1,6 @@
-package org.example.services;
+package org.example.services.files;
 
-import org.example.AppConfig;
+import org.example.config.AppConfig;
 import org.example.data.ClientOrder;
 import org.example.data.OrderReport;
 import org.example.exceptions.FileReadException;

@@ -1,4 +1,4 @@
-package org.example.services;
+package org.example.services.orders;
 
 import org.example.data.ClientOrder;
 import org.example.data.OrderReport;

@@ -1,7 +1,9 @@
-package org.example.services;
+package org.example.services.orders;
 
+import org.example.config.OrderConfig;
 import org.example.data.ClientOrder;
 import org.example.exceptions.FileReadException;
+import org.example.services.files.FileOrderService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,31 +11,22 @@ import java.util.List;
 
 public class OrderManager {
 
-    private final String paths;
-    private final double cost;
-    private final int discount;
-    private final int discountStep;
-
     private final FileOrderService fileOrderService;
     private final OrderDiscountService orderDiscountService;
 
     public OrderManager(
-            String paths,
-            double cost,
-            int discount,
-            int discountStep,
             FileOrderService fileOrderService,
             OrderDiscountService orderDiscountService
     ) {
-        this.paths = paths;
-        this.cost = cost;
-        this.discount = discount;
-        this.discountStep = discountStep;
         this.fileOrderService = fileOrderService;
         this.orderDiscountService = orderDiscountService;
     }
 
-    public void process() {
+    public void process(OrderConfig orderConfig) {
+        String paths = orderConfig.paths();
+        double cost = orderConfig.cost();
+        int discount = orderConfig.discount();
+        int discountStep = orderConfig.discountStep();
 
         List<String> filePaths = Arrays.stream(paths.split(","))
                 .map(String::trim)
