@@ -1,4 +1,4 @@
-package org.example.services.utilites;
+package org.example.services;
 
 import org.example.AppConfig;
 import org.example.data.ClientOrder;
@@ -6,6 +6,7 @@ import org.example.data.OrderReport;
 import org.example.exceptions.FileReadException;
 import org.example.exceptions.FileWriteException;
 import org.example.services.parsers.ClientParser;
+import org.example.services.utilites.DelimiterUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,9 +18,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class FileOrderService {
+public class FileOrderService implements FileService {
 
-    public static List<ClientOrder> read(String filePath) throws IOException {
+    @Override
+    public List<ClientOrder> read(String filePath) throws IOException {
         File file = new File(filePath);
         String delimiter = DelimiterUtils.getDelimiter(getExtension(file.getName()));
         ClientParser clientParser = new ClientParser();
@@ -34,11 +36,11 @@ public class FileOrderService {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            throw new FileReadException("Ошибка чтения файла", e);
+            throw new FileReadException("Ошибка чтения строки в файле", e);
         }
     }
 
-    public static String getExtension(String fileName) {
+    private String getExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf(".");
 
         if (dotIndex <= 0) {
@@ -48,7 +50,8 @@ public class FileOrderService {
         return fileName.substring(dotIndex + 1);
     }
 
-    public static void write(String path, List<OrderReport> clients) {
+    @Override
+    public void write(String path, List<OrderReport> clients) {
         String newFileName = buildResultFileName(path);
         System.out.println("Writing to: " + newFileName);
 
@@ -63,7 +66,7 @@ public class FileOrderService {
         }
     }
 
-    public static String buildResultFileName(String path) {
+    private String buildResultFileName(String path) {
         String prefix = AppConfig.get("result.file.prefix");
 
         int dotIndex = path.lastIndexOf(".");

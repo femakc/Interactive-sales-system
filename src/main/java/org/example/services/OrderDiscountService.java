@@ -1,6 +1,5 @@
 package org.example.services;
 
-import org.example.AppConfig;
 import org.example.data.ClientOrder;
 import org.example.data.OrderReport;
 
@@ -10,9 +9,7 @@ import java.util.List;
 
 public class OrderDiscountService {
 
-    public List<OrderReport> calculate(List<ClientOrder> clients, double cost) {
-        int discount = AppConfig.getInteger("start.discount");
-        int discountStep = AppConfig.getInteger("discount.step");
+    public List<OrderReport> calculate(List<ClientOrder> clients, double cost, int discount, int discountStep) {
 
         if (clients == null || clients.isEmpty()) {
             return List.of();
