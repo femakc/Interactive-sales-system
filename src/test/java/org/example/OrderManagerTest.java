@@ -27,10 +27,7 @@ class OrderManagerTest {
     FileService fileService;
     @Mock
     OrderDiscountService  orderDiscountService;
-    @Mock
-    ClientOrder clientOrder;
-    @Mock
-    OrderReport orderReport;
+
     @InjectMocks
     OrderManager manager;
 
@@ -43,6 +40,9 @@ class OrderManagerTest {
                 AppConfig.getInteger("test.start.discount"),
                 AppConfig.getInteger("test.discount.step")
         );
+
+        ClientOrder clientOrder = mock(ClientOrder.class);
+        OrderReport orderReport = mock(OrderReport.class);
 
         when(fileService.read("test.txt"))
                 .thenReturn(List.of(clientOrder));
