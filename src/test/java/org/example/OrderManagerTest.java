@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -35,14 +36,21 @@ class OrderManagerTest {
     void createOrder() throws IOException {
 
         OrderConfig orderConfig = new OrderConfig(
-                AppConfig.get("test.file.paths"),
-                AppConfig.getDouble("test.base.cost"),
-                AppConfig.getInteger("test.start.discount"),
-                AppConfig.getInteger("test.discount.step")
+                "test.txt,test",
+                100,
+                10,
+                2
         );
 
-        ClientOrder clientOrder = mock(ClientOrder.class);
-        OrderReport orderReport = mock(OrderReport.class);
+        ClientOrder clientOrder = new ClientOrder(
+                LocalDateTime.now(),
+                "test-company",
+                100);
+
+        OrderReport orderReport = new OrderReport(
+                "test-company",
+                100
+        );
 
         when(fileService.read("test.txt"))
                 .thenReturn(List.of(clientOrder));
