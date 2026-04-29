@@ -9,7 +9,11 @@ import org.example.services.files.FileService;
 import org.example.services.orders.OrderDiscountService;
 import org.example.services.orders.OrderManager;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +21,18 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class OrderManagerTest {
+    @Mock
+    FileService fileService;
+    @Mock
+    OrderDiscountService  orderDiscountService;
+    @Mock
+    ClientOrder clientOrder;
+    @Mock
+    OrderReport orderReport;
+    @InjectMocks
+    OrderManager manager;
 
     @Test
     void createOrder() throws IOException {
@@ -29,19 +44,11 @@ class OrderManagerTest {
                 AppConfig.getInteger("test.discount.step")
         );
 
-        FileService fileService = mock(FileOrderService.class);
-        OrderDiscountService  orderDiscountService = mock(OrderDiscountService.class);
-        ClientOrder clientOrder = mock(ClientOrder.class);
-        OrderReport orderReport = mock(OrderReport.class);
-
         when(fileService.read("test.txt"))
                 .thenReturn(List.of(clientOrder));
 
         when(orderDiscountService.calculate(anyList(), anyDouble(), anyInt(), anyInt()))
                 .thenReturn(List.of(orderReport));
-
-        OrderManager manager = new OrderManager(fileService, orderDiscountService);
-
 
         manager.process(orderConfig);
 
