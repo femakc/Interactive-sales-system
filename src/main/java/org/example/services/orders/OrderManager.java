@@ -4,6 +4,7 @@ import org.example.config.OrderConfig;
 import org.example.data.ClientOrder;
 import org.example.exceptions.FileReadException;
 import org.example.services.files.FileOrderService;
+import org.example.services.files.FileService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,11 +12,11 @@ import java.util.List;
 
 public class OrderManager {
 
-    private final FileOrderService fileOrderService;
+    private final FileService fileOrderService;
     private final OrderDiscountService orderDiscountService;
 
     public OrderManager(
-            FileOrderService fileOrderService,
+            FileService fileOrderService,
             OrderDiscountService orderDiscountService
     ) {
         this.fileOrderService = fileOrderService;
