@@ -3,6 +3,7 @@ package org.example.services.parsers;
 import org.example.data.ClientOrder;
 import org.example.exceptions.ParseException;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ClientParser implements LineParser<ClientOrder> {
@@ -18,7 +19,7 @@ public class ClientParser implements LineParser<ClientOrder> {
 
             LocalDateTime orderDate = LocalDateTime.parse(parts[0]);
             String companyName = parts[1];
-            float ordersWeight = Float.parseFloat(parts[2]);
+            BigDecimal ordersWeight = new BigDecimal(parts[2]);
 
             return new ClientOrder(orderDate, companyName, ordersWeight);
 

@@ -1,4 +1,6 @@
 package org.example.config;
 
-public record OrderConfig(String paths, double cost, int discount, int discountStep) {
+import java.math.BigDecimal;
+
+public record OrderConfig(String paths, BigDecimal cost, BigDecimal discount, BigDecimal discountStep) {
 }

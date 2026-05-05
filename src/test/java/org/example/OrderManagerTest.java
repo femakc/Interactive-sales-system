@@ -10,12 +10,14 @@ import org.example.services.orders.OrderDiscountService;
 import org.example.services.orders.OrderManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,25 +39,25 @@ class OrderManagerTest {
 
         OrderConfig orderConfig = new OrderConfig(
                 "test.txt,test",
-                100,
-                10,
-                2
+                new BigDecimal("100"),
+                new BigDecimal("10"),
+                new BigDecimal("2")
         );
 
         ClientOrder clientOrder = new ClientOrder(
                 LocalDateTime.now(),
                 "test-company",
-                100);
+                new BigDecimal("100"));
 
         OrderReport orderReport = new OrderReport(
                 "test-company",
-                100
+                new BigDecimal("100")
         );
 
         when(fileService.read("test.txt"))
                 .thenReturn(List.of(clientOrder));
 
-        when(orderDiscountService.calculate(anyList(), anyDouble(), anyInt(), anyInt()))
+        when(orderDiscountService.calculate(anyList(), any(BigDecimal.class), any(BigDecimal.class), any(BigDecimal.class)))
                 .thenReturn(List.of(orderReport));
 
         manager.process(orderConfig);
@@ -65,9 +67,9 @@ class OrderManagerTest {
         inOrder.verify(fileService).read("test.txt");
         inOrder.verify(orderDiscountService).calculate(
                 eq(List.of(clientOrder)),
-                eq(AppConfig.getDouble("test.base.cost")),
-                eq(AppConfig.getInteger("test.start.discount")),
-                eq(AppConfig.getInteger("test.discount.step"))
+                eq(AppConfig.getBigDecimal("test.base.cost")),
+                eq(AppConfig.getBigDecimal("test.start.discount")),
+                eq(AppConfig.getBigDecimal("test.discount.step"))
         );
         inOrder.verify(fileService).write("test.txt", List.of(orderReport));
     }

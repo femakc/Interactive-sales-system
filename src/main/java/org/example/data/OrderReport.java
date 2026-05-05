@@ -1,4 +1,6 @@
 package org.example.data;
 
-public record OrderReport(String companyName, double totalPrice) {
+import java.math.BigDecimal;
+
+public record OrderReport(String companyName, BigDecimal totalPrice) {
 }

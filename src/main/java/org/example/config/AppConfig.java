@@ -1,6 +1,7 @@
 package org.example.config;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Properties;
 
 public class AppConfig {
@@ -29,4 +30,5 @@ public class AppConfig {
     public static Integer getInteger(String key) {
         return Integer.parseInt(PROPS.getProperty(key));
     }
+    public static BigDecimal getBigDecimal(String key) {return new BigDecimal(PROPS.getProperty(key));}
 }

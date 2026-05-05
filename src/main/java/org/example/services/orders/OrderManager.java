@@ -7,6 +7,7 @@ import org.example.services.files.FileOrderService;
 import org.example.services.files.FileService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class OrderManager {
 
     public void process(OrderConfig orderConfig) {
         String paths = orderConfig.paths();
-        double cost = orderConfig.cost();
-        int discount = orderConfig.discount();
-        int discountStep = orderConfig.discountStep();
+        BigDecimal cost = orderConfig.cost();
+        BigDecimal discount = orderConfig.discount();
+        BigDecimal discountStep = orderConfig.discountStep();
 
         List<String> filePaths = Arrays.stream(paths.split(","))
                 .map(String::trim)

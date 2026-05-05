@@ -1,9 +1,10 @@
 package org.example.data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record ClientOrder(LocalDateTime orderDate, String companyName,
-                          double ordersWeight) implements Comparable<ClientOrder> {
+                          BigDecimal ordersWeight) implements Comparable<ClientOrder> {
 
     @Override
     public int compareTo(ClientOrder o) {

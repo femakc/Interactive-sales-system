@@ -12,9 +12,9 @@ public class App
     {
         OrderConfig orderConfig = new OrderConfig(
             AppConfig.get("files.paths"),
-            AppConfig.getDouble("base.cost"),
-            AppConfig.getInteger("start.discount"),
-            AppConfig.getInteger("discount.step")
+            AppConfig.getBigDecimal("base.cost"),
+            AppConfig.getBigDecimal("start.discount"),
+            AppConfig.getBigDecimal("discount.step")
         );
 
         FileOrderService fileOrderService = new FileOrderService();
